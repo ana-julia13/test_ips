@@ -72,6 +72,20 @@ Exemplo no gnuplot:
 plot 'res1_8.dat' u 1:3 w d
 ```
 
+## Gráficos
+
+```bash
+pip install numpy matplotlib
+python3 graf_ips.py                  # todos os .dat da pasta atual
+python3 graf_ips.py pasta            # .dat de outra pasta
+python3 graf_ips.py . res1_8 e_0.5   # só alguns arquivos
+```
+
+Os PNGs vão para `graficos_ips/`. O eixo x é escolhido sozinho: `a` se só
+`a` variou, `e` se só `e` variou, e na grade 2D sai um gráfico por valor
+de `e` (`res1_8_e0.002.png`, ...). O nome do corpo e o número de clones do
+título vêm do `ips.in`. Também lê os `edh*.dat` antigos (2 colunas).
+
 ## Exemplos
 
 `exemplos/` tem os três sistemas dos códigos antigos. Para rodar um deles:
