@@ -510,7 +510,7 @@ program ips
     real(dp), allocatable :: per(:,:), rel(:,:)
   end type
 
-  character(len=256) :: arqin, arqpla, linha
+  character(len=1024) :: arqin, arqpla, linha
   character(len=20), allocatable :: nome(:)
   real(dp), allocatable :: el0(:,:), lim(:)
   type(resultado), allocatable :: res(:)
