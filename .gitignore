@@ -4,3 +4,4 @@ ips_omp
 *.mod
 *.dat
 graficos_ips/
+ips.log

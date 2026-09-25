@@ -517,7 +517,7 @@ program ips
   integer, allocatable :: un(:,:)
   real(dp) :: req, mpla, razao, dt, a1, a2, e1, e2, pmin, ua, esc, grav
   integer  :: pot, nn, ll, ivar, na, ne, ia, ib, iobs, nlim, kres(2,6)
-  integer  :: i, k, npts, iprox, u
+  integer  :: i, k, npts, iprox, u, ulog
 
   ! ------------------------------------------------ leitura do ips.in
   arqin = 'ips.in'
@@ -581,10 +581,13 @@ program ips
   nn = 2**pot
   npts = (na+1)*(ne+1)
 
-  write(*,'(a,i0,a)')   ' Corpos: ', N, '  ('//trim(juntar(nome))//')'
-  write(*,'(a,a)')      ' Corpo variado: ', trim(nome(ivar))
-  write(*,'(a,i0,a,f0.2,a)') ' Pontos por integracao: ', nn, '  (', nn*dt/365.25_dp, ' anos)'
-  write(*,'(a,i0,a,i0,a)')   ' Grade: ', na+1, ' valores de a x ', ne+1, ' valores de e'
+  ! mensagens vao para ips.log (nada na tela; da pra rodar com &)
+  open(newunit=ulog, file='ips.log', status='replace', action='write')
+  write(ulog,'(a)') ' Inicio: '//agora()
+  write(ulog,'(a,i0,a)')   ' Corpos: ', N, '  ('//trim(juntar(nome))//')'
+  write(ulog,'(a,a)')      ' Corpo variado: ', trim(nome(ivar))
+  write(ulog,'(a,i0,a,f0.2,a)') ' Pontos por integracao: ', nn, '  (', nn*dt/365.25_dp, ' anos)'
+  write(ulog,'(a,i0,a,i0,a)')   ' Grade: ', na+1, ' valores de a x ', ne+1, ' valores de e'
 
   ! ------------------------------------------------ arquivos de saida
   allocate(un(nser, nlim))
@@ -609,7 +612,8 @@ program ips
       close(un(k,i))
     end do
   end do
-  write(*,*) 'Fim.'
+  write(ulog,'(a)') ' Fim: '//agora()
+  close(ulog)
 
 contains
 
@@ -691,8 +695,9 @@ contains
             flush(un(js,il))
           end do
         end do
-        write(*,'(a,i0,a,i0,a,f12.4,a,es12.5)') ' ponto ', iprox, '/', npts, &
-             '   a(km) =', r%a_km, '   e =', r%e
+        write(ulog,'(a,i0,a,i0,a,f12.4,a,es12.5,a)') ' ponto ', iprox, '/', npts, &
+             '   a(km) =', r%a_km, '   e =', r%e, '   '//agora()
+        flush(ulog)
         deallocate(r%per, r%rel)
       end associate
       iprox = iprox + 1
@@ -722,6 +727,14 @@ contains
     end do
     if (present(fim)) fim = 0
   end subroutine prox
+
+  ! data e hora, p/ o ips.log
+  function agora() result(s)
+    character(len=19) :: s
+    integer :: v(8)
+    call date_and_time(values=v)
+    write(s,'(i4.4,"-",i2.2,"-",i2.2," ",i2.2,":",i2.2,":",i2.2)') v(1:3), v(5:7)
+  end function
 
   function replace_tab(s) result(t)
     character(len=*), intent(in) :: s

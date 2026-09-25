@@ -19,6 +19,14 @@ gfortran -O2 -o ips ips.f90
 ./ips outro.in        # ou outro arquivo de configuração
 ```
 
+O programa não escreve nada na tela. O progresso vai para o `ips.log`, uma
+linha com data e hora por ponto da grade. Para deixar rodando em segundo plano:
+
+```bash
+nohup ./ips &          # continua mesmo se fechar o terminal
+tail -f ips.log        # acompanhar (Ctrl+C sai do tail, o ips continua)
+```
+
 Versão paralela (opcional): cada ponto da grade vai para um núcleo.
 
 ```bash
