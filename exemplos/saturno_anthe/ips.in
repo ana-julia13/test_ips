@@ -1,0 +1,32 @@
+! =====================================================================
+!  ips.in  -  Saturno, variando Anthe, ressonancia 11:10 com Mimas
+!  (era o ssatfftm-2SEMFFT-2.f)
+! =====================================================================
+planetas.in
+!
+! ---------------- PLANETA CENTRAL ----------------
+60268.0d0            ! raio equatorial (km)
+5.68462313752d26     ! massa do planeta (kg)
+3498.766564823439d0  ! Msol/Mplaneta (= 3497.9018*37940585.2/37931207.7)
+0.01629071d0  -0.0009358d0         ! J2  J4 (Jacobson 2006)
+!
+! ---------------- INTEGRACAO ----------------
+0.18d0               ! intervalo entre saidas (dias)  (= 0.9/5)
+20                   ! n. de pontos da serie = 2**p
+12                   ! LL do RA15
+!
+! ---------------- VARIACAO (aa e ee) ----------------
+2                                 ! corpo variado (Anthe)
+197900.0d0  198400.0d0  700       ! a_ini  a_fim (km)   n. de intervalos
+2.7d-3      2.7d-3      0         ! e_ini  e_fim        n. de intervalos
+!
+! ---------------- ANGULOS RESSONANTES ----------------
+! phi = k1*lamA + k2*lamB + k3*varpiA + k4*varpiB + k5*OmA + k6*OmB
+1  2                              ! corpo A (Mimas)  corpo B (Anthe)
+-10  11  -1  0   0  0             ! res1 = 11 lamB - 10 lamA - varpiA
+-10  11   0 -1   0  0             ! res2 = 11 lamB - 10 lamA - varpiB
+!
+! ---------------- SAIDA ----------------
+2                    ! corpo cujos I, a, e vao para a FFT
+15.0d0               ! periodo minimo (dias) p/ achar a amplitude maxima
+9   0.5 0.8 1 2 3 5 8 10 15       ! n. de limiares e limiares (% da amp. max.)

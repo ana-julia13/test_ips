@@ -1,0 +1,38 @@
+! =====================================================================
+!  ips.in  -  configuracao do IPS
+!  Linhas que comecam com ! ou # sao comentarios. Em cada linha de dados
+!  so os primeiros valores sao lidos, entao da pra comentar no fim.
+!  Exemplo abaixo: Naiad-Thalassa (Netuno), ressonancia 73:69
+! =====================================================================
+!
+! ---------------- ARQUIVO COM OS SATELITES ----------------
+planetas.in
+!
+! ---------------- PLANETA CENTRAL ----------------
+24764.0d0            ! raio equatorial (km)
+1.024092d26          ! massa do planeta (kg)
+19412.224d0          ! Msol/Mplaneta
+0.0035363d0  -0.000036d0     ! J2  J4
+!
+! ---------------- INTEGRACAO ----------------
+0.05886d0            ! intervalo entre saidas (dias)  (= 0.2943/5)
+20                   ! n. de pontos da serie = 2**p   (20 -> 1048576)
+12                   ! LL do RA15 (tolerancia = 10**-LL)
+!
+! ---------------- VARIACAO (aa e ee) ----------------
+! O corpo abaixo tem a e e substituidos pela grade (os valores dele no
+! planetas.in sao ignorados). n. de intervalos = 0 -> so o valor inicial.
+1                                 ! corpo variado (ordem no planetas.in)
+48260.0d0   48300.0d0   300       ! a_ini  a_fim (km)   n. de intervalos
+1.40d-3     1.40d-3     0         ! e_ini  e_fim        n. de intervalos
+!
+! ---------------- ANGULOS RESSONANTES ----------------
+! phi = k1*lamA + k2*lamB + k3*varpiA + k4*varpiB + k5*OmA + k6*OmB
+1  2                              ! corpo A  corpo B
+-69  73   0  0   -4   0           ! res1 = 73 lamB - 69 lamA - 4 OmA
+-69  73   0  0    0  -4           ! res2 = 73 lamB - 69 lamA - 4 OmB
+!
+! ---------------- SAIDA ----------------
+1                    ! corpo cujos I, a, e vao para a FFT (inc, a, e)
+15.0d0               ! periodo minimo (dias) p/ achar a amplitude maxima
+9   0.5 0.8 1 2 3 5 8 10 15       ! n. de limiares e limiares (% da amp. max.)

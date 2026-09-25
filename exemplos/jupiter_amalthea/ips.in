@@ -1,0 +1,33 @@
+! =====================================================================
+!  ips.in  -  Jupiter, variando Amalthea (era o ips_j_am.f)
+! =====================================================================
+planetas.in
+!
+! ---------------- PLANETA CENTRAL ----------------
+71492.0d0            ! raio equatorial (km)
+18.98125d26          ! massa do planeta (kg)
+1047.58d0            ! Msol/Mplaneta
+0.0146965063d0  -0.00058660850d0   ! J2  J4
+!
+! ---------------- INTEGRACAO ----------------
+0.058956d0           ! intervalo entre saidas (dias)  (= 0.294780/5)
+20                   ! n. de pontos da serie = 2**p
+12                   ! LL do RA15
+!
+! ---------------- VARIACAO (aa e ee) ----------------
+3                                 ! corpo variado (Amalthea)
+150000.0d0  210000.0d0  500       ! a_ini  a_fim (km)   n. de intervalos
+4.0d-3      4.0d-3      0         ! e_ini  e_fim        n. de intervalos
+!
+! ---------------- ANGULOS RESSONANTES ----------------
+! AJUSTE AQUI: o ips_j_am.f original usava a mesma ressonancia 73:69 dos
+! corpos 1 e 2 do caso de Netuno (Metis e Adrastea aqui).
+! phi = k1*lamA + k2*lamB + k3*varpiA + k4*varpiB + k5*OmA + k6*OmB
+1  2                              ! corpo A  corpo B
+-69  73   0  0   -4   0           ! res1
+-69  73   0  0    0  -4           ! res2
+!
+! ---------------- SAIDA ----------------
+3                    ! corpo cujos I, a, e vao para a FFT (o original usava o 1)
+15.0d0               ! periodo minimo (dias) p/ achar a amplitude maxima
+9   0.5 0.8 1 2 3 5 8 10 15       ! n. de limiares e limiares (% da amp. max.)
